@@ -1,0 +1,6 @@
+{
+  "$schema": "https://www.partykit.io/schema.json",
+  "name": "partykit-snowcraft-party",
+  "main": "src/party/server.ts",
+  "compatibilityDate": "2023-12-31"
+}

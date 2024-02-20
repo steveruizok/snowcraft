@@ -1,0 +1,385 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@700&display=swap');
+
+html,
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #fefefe;
+	color: black;
+	font-family: 'PT Sans Narrow', sans-serif;
+	line-height: 1;
+}
+
+body,
+body * {
+	pointer-events: none;
+	user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: transparent;
+	scrollbar-highlight-color: transparent;
+	-webkit-user-select: none;
+	user-select: none;
+	box-sizing: border-box;
+	outline: none;
+}
+
+.loading {
+	position: absolute;
+	inset: 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.game-container {
+	position: fixed;
+	inset: 0px;
+	touch-action: none;
+	pointer-events: all;
+}
+
+.game-events {
+	position: absolute;
+	inset: 0px;
+	pointer-events: all;
+	z-index: 20000;
+}
+
+.game-container__overlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 200;
+}
+
+.ping {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	padding: 16px;
+	opacity: 0.2;
+}
+
+/* --------------------- Player --------------------- */
+
+.player__container {
+	position: absolute;
+
+	top: -32px;
+	left: -32px;
+	width: 64px;
+	height: 64px;
+	background-size: 100% 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.player__container[data-isoverlay='true'] {
+	opacity: 0.16;
+}
+
+.player__name {
+	font-size: 12px;
+	font-weight: 700;
+	text-shadow: 1px 1px #ffffff;
+	text-align: center;
+	position: absolute;
+	bottom: -12px;
+	width: fit-content;
+	letter-spacing: 0.5px;
+	font-family: 'PT Sans Narrow', sans-serif;
+	background-color: rgba(255, 255, 255, 0.9);
+	padding: 1px 2px;
+}
+
+.player__container[data-isplayer='false'] .player__name {
+	bottom: -4px;
+}
+
+/* Green */
+
+.player__container[data-team='green'][data-state='idle'][data-isplayer='false'] {
+	background-image: url('/green_idle.png');
+}
+.player__container[data-team='green'][data-state='idle'][data-isplayer='true'] {
+	background-image: url('/green_idle.png'), url('/active.png');
+}
+
+.player__container[data-team='green'][data-state='aiming'][data-isplayer='false'] {
+	background-image: url('/green_aiming.png');
+}
+.player__container[data-team='green'][data-state='aiming'][data-isplayer='true'] {
+	background-image: url('/green_aiming.png'), url('/active.png');
+}
+
+.player__container[data-team='green'][data-state='throwing'][data-isplayer='false'] {
+	background-image: url('/green_throwing.png');
+}
+.player__container[data-team='green'][data-state='throwing'][data-isplayer='true'] {
+	background-image: url('/green_throwing.png'), url('/active.png');
+}
+
+.player__container[data-team='green'][data-state='hit'][data-isplayer='false'] {
+	background-image: url('/green_hit.png');
+}
+.player__container[data-team='green'][data-state='hit'][data-isplayer='true'] {
+	background-image: url('/green_hit.png'), url('/active.png');
+}
+
+.player__container[data-team='green'][data-state='dead'][data-isplayer='false'] {
+	background-image: url('/green_dead.png');
+}
+.player__container[data-team='green'][data-state='dead'][data-isplayer='true'] {
+	background-image: url('/green_dead.png'), url('/active.png');
+}
+
+.player__container[data-team='green'][data-state='waiting'][data-isplayer='false'],
+.player__container[data-team='green'][data-state='moving'][data-isplayer='false'] {
+	background-image: url('/green_idle.png');
+}
+
+/* Red */
+
+.player__container[data-team='red'][data-state='idle'][data-isplayer='false'] {
+	background-image: url('/red_idle.png');
+}
+.player__container[data-team='red'][data-state='idle'][data-isplayer='true'] {
+	background-image: url('/red_idle.png'), url('/active.png');
+}
+
+.player__container[data-team='red'][data-state='aiming'][data-isplayer='false'] {
+	background-image: url('/red_aiming.png');
+}
+.player__container[data-team='red'][data-state='aiming'][data-isplayer='true'] {
+	background-image: url('/red_aiming.png'), url('/active.png');
+}
+
+.player__container[data-team='red'][data-state='throwing'][data-isplayer='false'] {
+	background-image: url('/red_throwing.png');
+}
+.player__container[data-team='red'][data-state='throwing'][data-isplayer='true'] {
+	background-image: url('/red_throwing.png'), url('/active.png');
+}
+
+.player__container[data-team='red'][data-state='hit'][data-isplayer='false'] {
+	background-image: url('/red_hit.png');
+}
+.player__container[data-team='red'][data-state='hit'][data-isplayer='true'] {
+	background-image: url('/red_hit.png'), url('/active.png');
+}
+
+.player__container[data-team='red'][data-state='dead'][data-isplayer='false'] {
+	background-image: url('/red_dead.png');
+}
+.player__container[data-team='red'][data-state='dead'][data-isplayer='true'] {
+	background-image: url('/red_dead.png'), url('/active.png');
+}
+
+.player__container[data-team='red'][data-state='waiting'][data-isplayer='false'],
+.player__container[data-team='red'][data-state='moving'][data-isplayer='false'] {
+	background-image: url('/red_idle.png');
+}
+/* ---------------------- Balls --------------------- */
+
+.ball__container {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 8px;
+	width: 8px;
+	background-color: white;
+	box-shadow: 0px 1px 0px 1px rgb(174, 181, 188);
+	border-radius: 100%;
+	z-index: 2;
+}
+
+.ball__shadow {
+	position: absolute;
+	top: 4px;
+	left: 0px;
+	height: 4px;
+	width: 8px;
+	background-color: rgb(158, 169, 178);
+	box-shadow: 0px 0px 4px 0px rgb(158, 169, 178);
+	border-radius: 100%;
+	z-index: 1;
+}
+
+/* ---------------------- Piles --------------------- */
+
+.pile__container {
+	position: absolute;
+
+	top: -32px;
+	left: -32px;
+	width: 64px;
+	height: 64px;
+	background-size: 100% 100%;
+	background-image: url('/snow_pile.png');
+}
+
+/* ---------------- Throwing Power UI --------------- */
+
+.player__throwing-power {
+	position: absolute;
+	left: 28px;
+	top: -12px;
+	height: 23px;
+	width: 7px;
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: flex-start;
+	gap: 1px;
+	z-index: 1000;
+}
+
+.player__throwing-power__chunk {
+	background-color: rgb(2, 183, 1);
+	height: 2px;
+	width: 6px;
+	border-radius: 2px;
+}
+
+.player__throwing-power__chunk[data-power='1'],
+.player__throwing-power__chunk[data-power='2'] {
+	background-color: rgb(7, 150, 7);
+}
+
+.player__throwing-power__chunk[data-power='8'] {
+	width: 7px;
+	background-color: rgb(113, 172, 109);
+}
+
+/* --------------------- Health --------------------- */
+
+.player__health {
+	position: absolute;
+	top: -2px;
+	left: 15px;
+	height: 6px;
+	width: 32px;
+	border-radius: 0px;
+	display: flex;
+	gap: 1px;
+	border: 1px solid black;
+	background: linear-gradient(rgb(135, 133, 132) 0% 40%, #4d4949 60% 100%);
+}
+
+.player__health__chunk {
+	height: 100%;
+	width: 25%;
+	border-radius: 1px;
+}
+
+.player__health[data-state='low'] .player__health__chunk {
+	background: linear-gradient(rgb(248, 137, 114) 0% 40%, rgb(201, 88, 65) 60% 100%);
+}
+
+.player__health[data-state='med'] .player__health__chunk {
+	background: linear-gradient(rgb(204, 199, 5) 0% 40%, rgb(146, 168, 2) 60% 100%);
+}
+
+.player__health[data-state='high'] .player__health__chunk {
+	background: linear-gradient(rgb(81, 243, 56) 0% 40%, rgb(2, 183, 1) 60% 100%);
+}
+
+.player__health__chunk[data-opacity='high'] {
+	opacity: 1;
+}
+
+.player__health__chunk[data-opacity='med'] {
+	opacity: 0.5;
+}
+
+.player__health__chunk[data-opacity='low'] {
+	opacity: 0;
+}
+
+/* ------------------- Name Input ------------------- */
+
+.name_input__container {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	padding: 16px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 30000;
+}
+
+.name_input__input {
+	background-color: #eeeeee;
+	padding: 4px 10px;
+	font-size: 18px;
+	border: none;
+	font-family: sans-serif;
+	border-radius: 8px;
+	pointer-events: all;
+	text-align: center;
+	font-family: 'PT Sans Narrow', sans-serif;
+	letter-spacing: 0.8px;
+}
+
+.name_input__input:not(:focus) {
+	outline: 1px solid #aaa;
+}
+.name_input__input:focus {
+	outline: 1px solid #5e2dff;
+}
+
+/* ------------------- Attribution ------------------ */
+
+.attribution {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	font-size: 16px;
+	padding: 4px;
+	font-family: 'PT Sans Narrow', sans-serif;
+	display: flex;
+	gap: 4px;
+	flex-direction: column;
+	z-index: 30000;
+}
+
+.attribution p {
+	margin: 0px;
+}
+
+.attribution a {
+	padding: 0px;
+	text-decoration: none;
+	font-weight: 800;
+	color: black;
+	pointer-events: all;
+	color: dodgerblue;
+}
+
+.attribution a:hover {
+	text-decoration: underline;
+}
+
+/* ---------------------- Kills --------------------- */
+
+.kills__container {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	z-index: 35000;
+	pointer-events: none;
+	user-select: none;
+}
+
+.kill_container {
+	padding: 4px;
+	text-align: right;
+}
